@@ -1,7 +1,8 @@
 class other {
   $packages = [
     "curl",
-    "vim"
+    "vim",
+    "htop"
   ]
 
   exec { "apt-get update":
@@ -108,63 +109,8 @@ class groups {
   }
 }
 
-class charles {
-  $packages = [
-    "git",
-    "zsh"
-  ]
-  
-  package { $packages:
-    ensure => present
-  }
-
-  exec { "change shell":
-    path => ["/usr/bin", "/bin"],
-    command => "chsh -s /bin/zsh vagrant",
-    require => Package["zsh"]
-  }
-
-  exec { "install git-flow":
-    path => ["/usr/bin", "/bin"],
-    command => "wget --no-check-certificate -q -O - https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh | sudo bash",
-    require => Package["git"]
-  }
-  
-  exec { "install oh-my-zsh":
-    path => ["/usr/bin", "/bin"],
-    command => "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh",
-    require => Package["curl", "git", "zsh"],
-    user => "vagrant"
-  }
-
-  exec { "grab dotfiles":
-    path => ["/usr/bin", "/bin"],
-    command => "git clone --recursive git://github.com/cgdangelo/dotfiles.git /tmp/dotfiles",
-    require => Package["git"]
-  }
-  
-  exec { "use dotfiles":
-    require => Exec["grab dotfiles"],
-    path => ["/usr/bin", "/bin"],
-    command => "rsync -vr /tmp/dotfiles/ /home/vagrant/"
-  }
-  
-  exec { "remove dotfiles repo":
-    require => Exec["use dotfiles"],
-    path => ["/usr/bin", "/bin"],
-    command => "rm -rf /home/vagrant/.git"
-  }
-  
-  exec { "clean tmp dir":
-    require => Exec["remove dotfiles repo"],
-    path => ["/usr/bin", "/bin"],
-    command => "rm -rf /tmp/dotfiles"
-  }
-}
-
 include other
 include apache
 include php
 include mysql
 include groups
-include charles
