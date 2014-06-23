@@ -20,5 +20,6 @@ The following packages will be installed on the VM:
 * git
 * mysql-server
 * php-apc, php-pear, php5, php5-cli, php5-curl, php5-dev, php5-gd, php5-mcrypt, php5-mysql, php5-xdebug
+* composer
 * vim
 * htop
