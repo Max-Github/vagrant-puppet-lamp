@@ -21,6 +21,4 @@ The following packages will be installed on the VM:
 * mysql-server
 * php-apc, php-pear, php5, php5-cli, php5-curl, php5-dev, php5-gd, php5-mcrypt, php5-mysql, php5-xdebug
 * vim
-* zsh
-
-Additionally, after installing all the packages, my [dotfiles](https://github.com/cgdangelo/dotfiles) are downloaded and installed.
+* htop
